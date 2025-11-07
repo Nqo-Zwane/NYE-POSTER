@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'https://your-netlify-site.netlify.app',
+    baseURL: 'https://nye-poster.netlify.app',
     trace: 'on-first-retry',
   },
   projects: [

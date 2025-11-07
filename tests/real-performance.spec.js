@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const SITE_URL = 'https://your-netlify-site.netlify.app'; // Update with your actual URL
+const SITE_URL = 'https://nye-poster.netlify.app';
 
 test.describe('Real Performance Tests', () => {
   test('should load site within performance budget', async ({ page }) => {
