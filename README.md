@@ -6,11 +6,35 @@ A little hover motion effect on a grid and an intro animation.
 
 [Article on Codrops](https://tympanus.net/codrops/?p=77934)
 
-[Demo](https://tympanus.net/Development/IntroGridMotionTransition)
+[Demo](https://buzzonya.iftsystems.co.za)
 
 ## Installation
 
-Run this demo on a [local server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server).
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Install Playwright browsers:
+
+```bash
+PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.playwright.dev npx playwright install
+```
+
+3. Run this demo on a [local server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server):
+
+```bash
+npm run dev
+```
+
+## Testing
+
+Run performance tests:
+
+```bash
+npm test
+```
 
 ## Credits
 
