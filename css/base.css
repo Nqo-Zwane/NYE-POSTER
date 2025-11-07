@@ -13,6 +13,7 @@
   --page-padding: 1rem;
   --angle: -15deg;
   --trans-content: -30vh;
+  --s3-base-url: 'https://nye-bucket.s3.eu-north-1.amazonaws.com';
 }
 
 body {
@@ -191,7 +192,7 @@ a:focus-visible {
   width: 100%;
   height: 100%;
   background:
-    url(https://nye-bucket.s3.eu-north-1.amazonaws.com/img/noise.png),
+    url(var(--s3-base-url)/img/noise.png),
     radial-gradient(circle, #f9a13275 0%, transparent 100%);
   background-size: 250px, 100%;
   pointer-events: none;
@@ -271,7 +272,7 @@ a:focus-visible {
   font-weight: 700;
   font-size: 1.15rem;
   background:
-    url(https://nye-bucket.s3.eu-north-1.amazonaws.com/img/noise.png),
+    url(var(--s3-base-url)/img/noise.png),
     radial-gradient(circle, #f9a13275 0%, transparent 100%);
   background-size: 250px, 100%;
   transition: all 0.3s;
@@ -324,7 +325,7 @@ a:focus-visible {
   left: 0;
   z-index: 0;
   background:
-    url(https://nye-bucket.s3.eu-north-1.amazonaws.com/img/noise.png),
+    url(var(--s3-base-url)/img/noise.png),
     radial-gradient(at top, #f9a132 0%, #ddd 100%);
   background-size: 250px, 100%;
 }
