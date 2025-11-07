@@ -40,3 +40,8 @@ logs/
 # Build artifacts
 dist/
 build/
+
+# Test results
+test-results/
+playwright-report/
+playwright/.cache/
