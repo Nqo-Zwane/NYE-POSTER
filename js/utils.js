@@ -6,8 +6,12 @@
  */
 export const preloadImages = (selector = 'img') => {
   return new Promise((resolve) => {
-      // The imagesLoaded library is used to ensure all images (including backgrounds) are fully loaded.
-      imagesLoaded(document.querySelectorAll(selector), {background: true}, resolve);
+    // The imagesLoaded library is used to ensure all images (including backgrounds) are fully loaded.
+    imagesLoaded(
+      document.querySelectorAll(selector),
+      { background: true },
+      resolve
+    );
   });
 };
 
@@ -15,9 +19,9 @@ export const preloadImages = (selector = 'img') => {
 export const lerp = (a, b, n) => (1 - n) * a + n * b;
 
 // Gets the mouse position
-export const getMousePos = e => {
-  return { 
-      x : e.clientX, 
-      y : e.clientY 
+export const getMousePos = (e) => {
+  return {
+    x: e.clientX,
+    y: e.clientY,
   };
 };

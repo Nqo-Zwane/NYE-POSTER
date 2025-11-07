@@ -27,7 +27,7 @@ const config = {
   skewX: false,
   contrast: true,
   scale: false,
-  brightness: true
+  brightness: true,
 };
 
 // Total number of rows
@@ -41,9 +41,11 @@ const numRowItems = middleRowItems.length; // Number of items in the middle row
 const middleRowItemIndex = Math.floor(numRowItems / 2); // Index of the middle item in the middle row
 // Select the .row__item-inner element inside the middle .row__item element of the middle row
 // This element will be used for the animation that transitions the image to fullscreen when the button is clicked
-const middleRowItemInner = middleRowItems[middleRowItemIndex].querySelector('.row__item-inner');
+const middleRowItemInner =
+  middleRowItems[middleRowItemIndex].querySelector('.row__item-inner');
 // And the inner image
-const middleRowItemInnerImage = middleRowItemInner.querySelector('.row__item-img');
+const middleRowItemInnerImage =
+  middleRowItemInner.querySelector('.row__item-img');
 // Setting the final size of the middle image for the reveal effect
 middleRowItemInnerImage.classList.add('row__item-img--large');
 
@@ -61,7 +63,7 @@ let renderedStyles = Array.from({ length: numRows }, (v, index) => {
   // Inverted amt for scale: outermost rows are faster
   const scaleAmt = Math.min(baseAmt + distanceFromMiddle * 0.03, maxAmt);
   let style = { amt, scaleAmt };
-  
+
   if (config.translateX) {
     style.translateX = { previous: 0, current: 0 };
   }
@@ -93,7 +95,7 @@ const updateMousePosition = (ev) => {
 
 // Map mouse position to translation range
 const calculateMappedX = () => {
-  return ((mousepos.x / winsize.width) * 2 - 1) * 40 * winsize.width / 100;
+  return (((mousepos.x / winsize.width) * 2 - 1) * 40 * winsize.width) / 100;
 };
 
 // Map mouse position to skew range (-3 to 3)
@@ -114,7 +116,10 @@ const calculateMappedContrast = () => {
 const calculateMappedScale = () => {
   const centerScale = 1;
   const edgeScale = 0.95;
-  return centerScale - Math.abs((mousepos.x / winsize.width) * 2 - 1) * (centerScale - edgeScale);
+  return (
+    centerScale -
+    Math.abs((mousepos.x / winsize.width) * 2 - 1) * (centerScale - edgeScale)
+  );
 };
 
 // Map mouse position to brightness range (100 at center to 15 at edges)
@@ -138,7 +143,7 @@ const render = () => {
     skewX: calculateMappedSkew(),
     contrast: calculateMappedContrast(),
     scale: calculateMappedScale(),
-    brightness: calculateMappedBrightness()
+    brightness: calculateMappedBrightness(),
   };
 
   // Calculate and set the translation for each row
@@ -150,7 +155,11 @@ const render = () => {
       if (config[prop]) {
         style[prop].current = mappedValues[prop];
         const amt = prop === 'scale' ? style.scaleAmt : style.amt;
-        style[prop].previous = lerp(style[prop].previous, style[prop].current, amt);
+        style[prop].previous = lerp(
+          style[prop].previous,
+          style[prop].current,
+          amt
+        );
       }
     }
 
@@ -159,8 +168,10 @@ const render = () => {
     if (config.translateX) gsapSettings.x = style.translateX.previous;
     if (config.skewX) gsapSettings.skewX = style.skewX.previous;
     if (config.scale) gsapSettings.scale = style.scale.previous;
-    if (config.contrast) gsapSettings.filter = `contrast(${style.contrast.previous}%)`;
-    if (config.brightness) gsapSettings.filter = `${gsapSettings.filter ? gsapSettings.filter + ' ' : ''}brightness(${style.brightness.previous}%)`;
+    if (config.contrast)
+      gsapSettings.filter = `contrast(${style.contrast.previous}%)`;
+    if (config.brightness)
+      gsapSettings.filter = `${gsapSettings.filter ? gsapSettings.filter + ' ' : ''}brightness(${style.brightness.previous}%)`;
 
     gsap.set(row, gsapSettings);
   });
@@ -188,7 +199,7 @@ const enterFullview = () => {
   // Logic to animate the middle image to full view using gsap Flip
   const flipstate = Flip.getState(middleRowItemInner);
   fullview.appendChild(middleRowItemInner);
-  
+
   // Get the CSS variable value for the translation
   const transContent = getCSSVariableValue(content, '--trans-content');
 
@@ -196,42 +207,56 @@ const enterFullview = () => {
   const tl = gsap.timeline();
 
   // Add the Flip animation to the timeline
-  tl.add(Flip.from(flipstate, {
-    duration: 0.9,
-    ease: 'power4',
-    absolute: true,
-    onComplete: stopRendering
-  }))
-  // Fade out grid
-  .to(grid, {
-    duration: 0.9,
-    ease: 'power4',
-    opacity: 0.01
-  }, 0)
-  // Scale up the inner image
-  .to(middleRowItemInnerImage, {
-    scale: 1.2,
-    duration: 3,
-    ease: 'sine'
-  }, '<-=0.45')
-  // Move the content up
-  .to(content, {
-    y: transContent, // Use the CSS variable value
-    duration: 0.9,
-    ease: 'power4'
-  })
-  // Show the frame 
-  .add(() => frame.classList.remove('hidden'), '<')
-  // Scale and move 
-  .to(middleRowItemInnerImage, {
-    scale: 1.1,
-    startAt: {filter: 'brightness(100%)'},
-    filter: 'brightness(50%)',
-    y: '-5vh',
-    duration: 0.9,
-    ease: 'power4'
-  }, '<');
-  
+  tl.add(
+    Flip.from(flipstate, {
+      duration: 0.9,
+      ease: 'power4',
+      absolute: true,
+      onComplete: stopRendering,
+    })
+  )
+    // Fade out grid
+    .to(
+      grid,
+      {
+        duration: 0.9,
+        ease: 'power4',
+        opacity: 0.01,
+      },
+      0
+    )
+    // Scale up the inner image
+    .to(
+      middleRowItemInnerImage,
+      {
+        scale: 1.2,
+        duration: 3,
+        ease: 'sine',
+      },
+      '<-=0.45'
+    )
+    // Move the content up
+    .to(content, {
+      y: transContent, // Use the CSS variable value
+      duration: 0.9,
+      ease: 'power4',
+    })
+    // Show the frame
+    .add(() => frame.classList.remove('hidden'), '<')
+    // Scale and move
+    .to(
+      middleRowItemInnerImage,
+      {
+        scale: 1.1,
+        startAt: { filter: 'brightness(100%)' },
+        filter: 'brightness(50%)',
+        y: '-5vh',
+        duration: 0.9,
+        ease: 'power4',
+      },
+      '<'
+    );
+
   // Hide the button
   enterButton.classList.add('hidden');
   // Scrolling allowed
