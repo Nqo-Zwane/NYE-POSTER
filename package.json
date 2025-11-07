@@ -7,6 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:performance": "vitest run tests/performance.test.js",
     "lint": "eslint js/**/*.js",
     "lint:fix": "eslint js/**/*.js --fix",
     "format": "prettier --write .",
@@ -44,13 +48,16 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.0",
+    "@vitest/ui": "^4.0.8",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
+    "jsdom": "^27.1.0",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "vite": "^7.2.2"
+    "vite": "^7.2.2",
+    "vitest": "^4.0.8"
   }
 }
