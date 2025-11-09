@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.forEach((element) => {
     const style = element.getAttribute('style');
     const updatedStyle = style.replace(
-      /url\(img\//g,
-      `url(${CONFIG.S3_BASE_URL}/img/`
+      /url\(img\/([^)]+)\)/g,
+      (match, path) => {
+        // Encode spaces and special characters in the path
+        const encodedPath = encodeURIComponent(path).replace(/%2F/g, '/');
+        return `url(${CONFIG.S3_BASE_URL}/img/${encodedPath})`;
+      }
     );
     element.setAttribute('style', updatedStyle);
   });
