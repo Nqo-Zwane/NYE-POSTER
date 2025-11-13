@@ -32,7 +32,7 @@ jobs:
                     repo: context.repo.repo,
                     title: `⚠️ URGENT: ${name} deadline in ${daysLeft} days`,
                     body: `🚨 **Deadline Alert**
-                    
+
 **Milestone:** ${name}
 **Deadline:** ${deadline}
 **Days Remaining:** ${daysLeft}
