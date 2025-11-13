@@ -21,9 +21,9 @@ jobs:
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: 1,  // Media collection issue
+                issue_number: 1,
                 body: `📅 **Daily Reminder - ${today}**
-                
+
 🎯 Media Collection Progress Check
 ⏰ ${daysLeft} days remaining until Nov 25th deadline
 📝 Don't forget your 1-hour media session today!
