@@ -19,10 +19,7 @@ jobs:
             const commit = context.payload.head_commit;
             const message = commit.message;
             
-            // Extract time patterns: "1h", "2hr", "30m", "1.5h"
             const timeMatch = message.match(/(\d+(?:\.\d+)?)(h|hr|hours?|m|min|minutes?)/i);
-            
-            // Extract issue references: "#1", "fixes #2", "closes #3"
             const issueMatch = message.match(/#(\d+)/);
             
             if (timeMatch && issueMatch) {
@@ -30,7 +27,6 @@ jobs:
               const issueNumber = issueMatch[1];
               const commitSha = commit.id.substring(0, 7);
               
-              // Get commit stats
               const { data: commitData } = await github.rest.repos.getCommit({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -40,15 +36,12 @@ jobs:
               const stats = commitData.stats;
               const files = commitData.files.map(f => f.filename).join(', ');
               
+              const timeMessage = '⏱️ **' + timeSpent + '** - ' + new Date().toLocaleDateString() + '\n\n📝 **Commit:** ' + commitSha + ' - ' + message.split('\n')[0] + '\n📊 **Changes:** +' + stats.additions + ' -' + stats.deletions + ' lines\n📁 **Files:** ' + files + '\n🔗 [View commit](' + commit.url + ')';
+              
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issueNumber,
-                body: `⏱️ **${timeSpent}** - ${new Date().toLocaleDateString()}
-                
-📝 **Commit:** ${commitSha} - ${message.split('\n')[0]}
-📊 **Changes:** +${stats.additions} -${stats.deletions} lines
-📁 **Files:** ${files}
-🔗 [View commit](${commit.url})`
+                body: timeMessage
               });
             }
