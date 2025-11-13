@@ -27,13 +27,7 @@ jobs:
               let status = daysLeft > 0 ? `${daysLeft} days remaining` : 'OVERDUE';
               let emoji = daysLeft > 3 ? '📋' : daysLeft > 0 ? '⚠️' : '🚨';
               
-              const message = `${emoji} **Evening Check-in - ${today}**
-
-📝 **Issue:** ${issue.title}
-📅 **Deadline:** ${issue.deadline}
-⏰ **Status:** ${status}
-
-How did today go? Don't forget to log your time when you commit!`;
+              const message = emoji + ' **Evening Check-in - ' + today + '**\n\n📝 **Issue:** ' + issue.title + '\n📅 **Deadline:** ' + issue.deadline + '\n⏰ **Status:** ' + status + '\n\nHow did today go? Don\'t forget to log your time when you commit!';
               
               try {
                 await github.rest.issues.createComment({
