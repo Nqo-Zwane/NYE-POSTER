@@ -27,18 +27,20 @@ jobs:
               let status = daysLeft > 0 ? `${daysLeft} days remaining` : 'OVERDUE';
               let emoji = daysLeft > 3 ? '📋' : daysLeft > 0 ? '⚠️' : '🚨';
               
-              try {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                  body: `${emoji} **Evening Check-in - ${today}**
+              const message = `${emoji} **Evening Check-in - ${today}**
 
 📝 **Issue:** ${issue.title}
 📅 **Deadline:** ${issue.deadline}
 ⏰ **Status:** ${status}
 
-How did today go? Don't forget to log your time when you commit!`
+How did today go? Don't forget to log your time when you commit!`;
+              
+              try {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: message
                 });
               } catch (error) {
                 console.log(`Could not comment on issue ${issue.number}: ${error.message}`);
