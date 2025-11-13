@@ -1,0 +1,43 @@
+name: Milestone Deadline Reminder
+
+on:
+  schedule:
+    - cron: '0 18 * * *'  # 6 PM daily
+  workflow_dispatch:
+
+jobs:
+  milestone-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Milestone Progress
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const milestones = {
+              'Media Collection': '2024-11-25',
+              'Particle Logo': '2024-11-28',
+              'Portfolio Launch': '2024-12-08'
+            };
+            
+            const today = new Date();
+            
+            for (const [name, deadline] of Object.entries(milestones)) {
+              const deadlineDate = new Date(deadline);
+              const daysLeft = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
+              
+              if (daysLeft <= 3 && daysLeft > 0) {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `⚠️ URGENT: ${name} deadline in ${daysLeft} days`,
+                  body: `🚨 **Deadline Alert**
+                  
+**Milestone:** ${name}
+**Deadline:** ${deadline}
+**Days Remaining:** ${daysLeft}
+
+Time to prioritize this milestone!`,
+                  labels: ['urgent', 'deadline']
+                });
+              }
+            }
