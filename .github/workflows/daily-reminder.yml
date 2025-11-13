@@ -18,19 +18,12 @@ jobs:
             const daysLeft = Math.ceil((mediaDeadline - new Date()) / (1000 * 60 * 60 * 24));
             
             if (daysLeft > 0) {
+              const message = '📅 **Daily Reminder - ' + today + '**\n\n🎯 Media Collection Progress Check\n⏰ ' + daysLeft + ' days remaining until Nov 25th deadline\n📝 Don\'t forget your 1-hour media session today!\n\nTasks to focus on:\n- [ ] Source new images\n- [ ] Optimize existing images\n- [ ] Test loading performance';
+              
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: 1,
-                body: `📅 **Daily Reminder - ${today}**
-
-🎯 Media Collection Progress Check
-⏰ ${daysLeft} days remaining until Nov 25th deadline
-📝 Don't forget your 1-hour media session today!
-
-Tasks to focus on:
-- [ ] Source new images
-- [ ] Optimize existing images  
-- [ ] Test loading performance`
+                body: message
               });
             }
