@@ -14,7 +14,7 @@ jobs:
         with:
           script: |
             const today = new Date().toDateString();
-            const mediaDeadline = new Date('2024-11-25');
+            const mediaDeadline = new Date('2025-11-25');
             const daysLeft = Math.ceil((mediaDeadline - new Date()) / (1000 * 60 * 60 * 24));
             
             if (daysLeft > 0) {

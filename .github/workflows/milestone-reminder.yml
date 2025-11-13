@@ -15,9 +15,9 @@ jobs:
           script: |
             const today = new Date().toDateString();
             const issues = [
-              { number: 1, title: 'Media Collection', deadline: '2024-11-25' },
-              { number: 2, title: 'Particle Animation Logo', deadline: '2024-11-16' },
-              { number: 3, title: 'Creative Direction', deadline: '2024-11-16' }
+              { number: 1, title: 'Media Collection', deadline: '2025-11-25' },
+              { number: 2, title: 'Particle Animation Logo', deadline: '2025-11-16' },
+              { number: 3, title: 'Creative Direction', deadline: '2025-11-16' }
             ];
             
             for (const issue of issues) {
