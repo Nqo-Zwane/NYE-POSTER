@@ -1,4 +1,4 @@
-name: Milestone Deadline Reminder
+name: Daily Evening Issue Reminder
 
 on:
   schedule:
@@ -6,42 +6,41 @@ on:
   workflow_dispatch:
 
 jobs:
-  milestone-check:
+  daily-issue-reminder:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Milestone Progress
+      - name: Send Daily Issue Reminders
         uses: actions/github-script@v7
         with:
           script: |
-            const milestones = {
-              'Media Collection': '2024-11-25',
-              'Particle Logo': '2024-11-28',
-              'Portfolio Launch': '2024-12-08'
-            };
+            const today = new Date().toDateString();
+            const issues = [
+              { number: 1, title: 'Media Collection', deadline: '2024-11-25' },
+              { number: 2, title: 'Particle Animation Logo', deadline: '2024-11-28' },
+              { number: 3, title: 'Creative Direction', deadline: '2024-12-01' }
+            ];
             
-            const today = new Date();
-            
-            for (const [name, deadline] of Object.entries(milestones)) {
-              const deadlineDate = new Date(deadline);
-              const daysLeft = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
+            for (const issue of issues) {
+              const deadlineDate = new Date(issue.deadline);
+              const daysLeft = Math.ceil((deadlineDate - new Date()) / (1000 * 60 * 60 * 24));
               
-              if (daysLeft <= 3 && daysLeft > 0) {
-                try {
-                  await github.rest.issues.create({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    title: `⚠️ URGENT: ${name} deadline in ${daysLeft} days`,
-                    body: `🚨 **Deadline Alert**
+              let status = daysLeft > 0 ? `${daysLeft} days remaining` : 'OVERDUE';
+              let emoji = daysLeft > 3 ? '📋' : daysLeft > 0 ? '⚠️' : '🚨';
+              
+              try {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: `${emoji} **Evening Check-in - ${today}**
 
-**Milestone:** ${name}
-**Deadline:** ${deadline}
-**Days Remaining:** ${daysLeft}
+📝 **Issue:** ${issue.title}
+📅 **Deadline:** ${issue.deadline}
+⏰ **Status:** ${status}
 
-Time to prioritize this milestone!`,
-                    labels: ['urgent']
-                  });
-                } catch (error) {
-                  console.log(`Could not create issue: ${error.message}`);
-                }
+How did today go? Don't forget to log your time when you commit!`
+                });
+              } catch (error) {
+                console.log(`Could not comment on issue ${issue.number}: ${error.message}`);
               }
             }
