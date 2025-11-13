@@ -2,7 +2,7 @@ name: Daily Portfolio Reminder
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # 9 AM daily
+    - cron: '0 8 * * *'  # 8 AM daily
   workflow_dispatch:  # Manual trigger
 
 jobs:
