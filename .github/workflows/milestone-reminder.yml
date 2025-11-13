@@ -26,18 +26,22 @@ jobs:
               const daysLeft = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
               
               if (daysLeft <= 3 && daysLeft > 0) {
-                await github.rest.issues.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  title: `⚠️ URGENT: ${name} deadline in ${daysLeft} days`,
-                  body: `🚨 **Deadline Alert**
-                  
+                try {
+                  await github.rest.issues.create({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    title: `⚠️ URGENT: ${name} deadline in ${daysLeft} days`,
+                    body: `🚨 **Deadline Alert**
+                    
 **Milestone:** ${name}
 **Deadline:** ${deadline}
 **Days Remaining:** ${daysLeft}
 
 Time to prioritize this milestone!`,
-                  labels: ['urgent', 'deadline']
-                });
+                    labels: ['urgent']
+                  });
+                } catch (error) {
+                  console.log(`Could not create issue: ${error.message}`);
+                }
               }
             }
