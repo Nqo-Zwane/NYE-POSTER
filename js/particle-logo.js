@@ -201,11 +201,38 @@ class ParticleLogo {
     this.isFormed = !this.isFormed;
 
     if (this.isFormed) {
-      // Scattered → Image (skip particle logo formation)
-      this.showImage();
+      // Scattered → Form logo with particles, then show image
+      this.formLogoThenShowImage();
     } else {
       // Image → Scattered particles
       this.scatterParticles();
+    }
+  }
+
+  formLogoThenShowImage() {
+    // First animate particles to logo positions
+    if (typeof gsap === 'undefined') {
+      this.particles.forEach((particle, i) => {
+        particle.currentX = particle.targetX;
+        particle.currentY = particle.targetY;
+      });
+      // Show image immediately if no GSAP
+      setTimeout(() => this.showImage(), 500);
+    } else {
+      this.particles.forEach((particle, i) => {
+        gsap.to(particle, {
+          currentX: particle.targetX,
+          currentY: particle.targetY,
+          duration: 1.5,
+          ease: 'power2.out',
+          delay: Math.random() * 0.3,
+        });
+      });
+
+      // After particles form logo, show the actual image
+      gsap.delayedCall(2.0, () => {
+        this.showImage();
+      });
     }
   }
 
