@@ -13,7 +13,13 @@ const grid = document.querySelector('.grid'); // Reference to the grid element
 const gridRows = grid.querySelectorAll('.row'); // Reference to all row elements within the grid
 
 // Initialize sound manager
-const soundManager = new SoundManager();
+let soundManager;
+try {
+  soundManager = new SoundManager();
+} catch (e) {
+  console.warn('Sound system failed to initialize:', e);
+  soundManager = { playExploreSound: () => {} }; // Fallback
+}
 
 // Cache window size and update on resize
 let winsize = { width: window.innerWidth, height: window.innerHeight };
