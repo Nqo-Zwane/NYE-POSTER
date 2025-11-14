@@ -230,7 +230,7 @@ class ParticleLogo {
       });
 
       // After particles form logo, show the actual image
-      gsap.delayedCall(1.2, () => {
+      gsap.delayedCall(1.5, () => {
         this.showImage();
       });
     }
