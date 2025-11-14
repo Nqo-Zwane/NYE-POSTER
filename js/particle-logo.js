@@ -215,7 +215,7 @@ class ParticleLogo {
       console.error('Failed to load logo image');
     };
 
-    img.src = './img/LOGO-192X192-removebg-preview.png';
+    img.src = '/img/LOGO-192X192-removebg-preview.png';
   }
 
   toggle() {
