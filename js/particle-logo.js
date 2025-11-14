@@ -26,7 +26,8 @@ class ParticleLogo {
 
     this.particles = [];
     this.textPositions = [];
-    this.isFormed = false;
+    this.state = 'scattered'; // 'scattered', 'logo', 'image'
+    this.logoImage = null;
 
     this.setupRenderer();
     this.getLogoPositions();
@@ -54,7 +55,31 @@ class ParticleLogo {
 
     header.appendChild(canvas);
 
+    // Create image element for final state
+    this.createImageElement();
+
     canvas.addEventListener('click', (e) => {
+      this.toggle();
+    });
+  }
+
+  createImageElement() {
+    this.logoImage = document.createElement('img');
+    this.logoImage.src = './img/LOGO-192X192-removebg-preview.png';
+    this.logoImage.style.position = 'absolute';
+    this.logoImage.style.top = '4px';
+    this.logoImage.style.left = '8px';
+    this.logoImage.style.width = '160px';
+    this.logoImage.style.height = '130px';
+    this.logoImage.style.cursor = 'pointer';
+    this.logoImage.style.zIndex = '11';
+    this.logoImage.style.display = 'none';
+    this.logoImage.style.pointerEvents = 'auto';
+
+    const header = document.querySelector('.frame');
+    header.appendChild(this.logoImage);
+
+    this.logoImage.addEventListener('click', () => {
       this.toggle();
     });
   }
@@ -173,21 +198,65 @@ class ParticleLogo {
   }
 
   toggle() {
-    this.isFormed = !this.isFormed;
+    if (this.state === 'scattered') {
+      // Scattered → Logo formation
+      this.state = 'logo';
+      this.formLogo();
+    } else if (this.state === 'logo') {
+      // Logo → Image
+      this.state = 'image';
+      this.showImage();
+    } else {
+      // Image → Scattered
+      this.state = 'scattered';
+      this.scatterParticles();
+    }
+  }
 
+  formLogo() {
     if (typeof gsap === 'undefined') {
       this.particles.forEach((particle, i) => {
-        particle.currentX = this.isFormed ? particle.targetX : particle.randomX;
-        particle.currentY = this.isFormed ? particle.targetY : particle.randomY;
+        particle.currentX = particle.targetX;
+        particle.currentY = particle.targetY;
       });
     } else {
       this.particles.forEach((particle, i) => {
-        const targetX = this.isFormed ? particle.targetX : particle.randomX;
-        const targetY = this.isFormed ? particle.targetY : particle.randomY;
-
         gsap.to(particle, {
-          currentX: targetX,
-          currentY: targetY,
+          currentX: particle.targetX,
+          currentY: particle.targetY,
+          duration: 1.5,
+          ease: 'power2.out',
+          delay: Math.random() * 0.3,
+        });
+      });
+    }
+  }
+
+  showImage() {
+    // Hide particles and show actual image
+    if (this.points) {
+      this.points.visible = false;
+    }
+    this.logoImage.style.display = 'block';
+  }
+
+  scatterParticles() {
+    // Hide image and show particles
+    this.logoImage.style.display = 'none';
+    if (this.points) {
+      this.points.visible = true;
+    }
+
+    if (typeof gsap === 'undefined') {
+      this.particles.forEach((particle, i) => {
+        particle.currentX = particle.randomX;
+        particle.currentY = particle.randomY;
+      });
+    } else {
+      this.particles.forEach((particle, i) => {
+        gsap.to(particle, {
+          currentX: particle.randomX,
+          currentY: particle.randomY,
           duration: 1.5,
           ease: 'power2.out',
           delay: Math.random() * 0.3,
@@ -210,7 +279,7 @@ class ParticleLogo {
       const positions = this.points.geometry.attributes.position.array;
 
       this.particles.forEach((particle, i) => {
-        if (!this.isFormed) {
+        if (this.state === 'scattered') {
           particle.currentZ =
             particle.randomZ + Math.sin(time * 2 + particle.randomSeed) * 2;
         }
