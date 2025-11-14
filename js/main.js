@@ -1,6 +1,7 @@
 // Importing utility functions for preloading images, getting mouse position, and linear interpolation
 import { preloadImages, getMousePos, lerp } from './utils.js';
 import { SoundManager } from './sound.js';
+import { ParticleLogo } from './particle-logo.js';
 
 // Registers the Flip plugin with GSAP
 gsap.registerPlugin(Flip);
@@ -276,6 +277,13 @@ const enterFullview = () => {
 // Initialization function
 const init = () => {
   startRendering();
+
+  // Initialize particle logo with error handling
+  try {
+    new ParticleLogo();
+  } catch (e) {
+    console.warn('Particle logo failed to initialize:', e);
+  }
 
   // Initialize click event for the "Explore" button
   enterButton.addEventListener('click', () => {
