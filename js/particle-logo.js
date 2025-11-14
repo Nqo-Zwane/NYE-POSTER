@@ -36,7 +36,7 @@ class ParticleLogo {
 
   setupRenderer() {
     const width = Math.min(160, window.innerWidth * 0.15);
-    const height = Math.min(130, window.innerHeight * 0.15);
+    const height = (width * 130) / 160; // Maintain aspect ratio
 
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x000000, 0);
@@ -92,7 +92,7 @@ class ParticleLogo {
 
   handleResize() {
     const width = Math.min(160, window.innerWidth * 0.15);
-    const height = Math.min(130, window.innerHeight * 0.15);
+    const height = (width * 130) / 160; // Maintain aspect ratio
 
     this.renderer.setSize(width, height);
     this.renderer.domElement.style.width = width + 'px';
