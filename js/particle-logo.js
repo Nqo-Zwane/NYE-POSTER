@@ -70,7 +70,7 @@ class ParticleLogo {
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uSize: { value: 1.5 },
+        uSize: { value: 2.0 },
       },
       vertexShader: `
         uniform float uTime;
@@ -81,7 +81,7 @@ class ParticleLogo {
           vec3 pos = position;
           
           // Individual random Z movement for each particle
-          pos.z += sin(uTime * 2.0 + aRandom * 10.0) * 2.0;
+          pos.z += sin(uTime * 2.0 + aRandom * 10.0) * 30.0;
           
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
@@ -119,7 +119,7 @@ class ParticleLogo {
         randomX: positions[i * 3],
         randomY: positions[i * 3 + 1],
         randomZ: positions[i * 3 + 2],
-        randomSeed: Math.random() * 10,
+        randomSeed: Math.random() * 5,
       });
     }
 
