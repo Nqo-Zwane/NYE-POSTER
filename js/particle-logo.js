@@ -145,8 +145,8 @@ class ParticleLogo {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const pixels = imageData.data;
 
-      for (let y = 0; y < canvas.height; y += 1.5) {
-        for (let x = 0; x < canvas.width; x += 1.5) {
+      for (let y = 0; y < canvas.height; y += 2.0) {
+        for (let x = 0; x < canvas.width; x += 2.0) {
           const index = (y * canvas.width + x) * 4;
           const r = pixels[index];
           const g = pixels[index + 1];
