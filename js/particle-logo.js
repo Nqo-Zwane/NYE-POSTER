@@ -180,8 +180,8 @@ class ParticleLogo {
 
           if (alpha > 100 && r + g + b > 400) {
             this.textPositions.push({
-              x: (x - canvas.width / 2) * 0.12,
-              y: (canvas.height / 2 - y) * 0.12,
+              x: (x - canvas.width / 2) * 0.1,
+              y: (canvas.height / 2 - y) * 0.1,
             });
           }
         }
