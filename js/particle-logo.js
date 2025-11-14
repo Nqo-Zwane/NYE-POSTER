@@ -35,7 +35,10 @@ class ParticleLogo {
   }
 
   setupRenderer() {
-    this.renderer.setSize(160, 130);
+    const width = Math.min(160, window.innerWidth * 0.15);
+    const height = Math.min(130, window.innerHeight * 0.15);
+
+    this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x000000, 0);
     this.camera.position.z = 20;
 
@@ -49,28 +52,31 @@ class ParticleLogo {
     canvas.style.zIndex = '10';
     canvas.style.border = 'none';
     canvas.style.backgroundColor = 'transparent';
-    canvas.style.width = '160px';
-    canvas.style.height = '130px';
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
     canvas.style.pointerEvents = 'auto';
 
     header.appendChild(canvas);
 
     // Create image element for final state
-    this.createImageElement();
+    this.createImageElement(width, height);
 
     canvas.addEventListener('click', (e) => {
       this.toggle();
     });
+
+    // Add resize handler
+    window.addEventListener('resize', () => this.handleResize());
   }
 
-  createImageElement() {
+  createImageElement(width, height) {
     this.logoImage = document.createElement('img');
     this.logoImage.src = './img/LOGO-192X192-removebg-preview.png';
     this.logoImage.style.position = 'absolute';
-    this.logoImage.style.top = '35px';
-    this.logoImage.style.left = '48px';
-    this.logoImage.style.width = '80px';
-    this.logoImage.style.height = '65px';
+    this.logoImage.style.top = height * 0.27 + 4 + 'px';
+    this.logoImage.style.left = width * 0.3 + 8 + 'px';
+    this.logoImage.style.width = width * 0.5 + 'px';
+    this.logoImage.style.height = height * 0.5 + 'px';
     this.logoImage.style.cursor = 'pointer';
     this.logoImage.style.zIndex = '11';
     this.logoImage.style.display = 'none';
@@ -82,6 +88,21 @@ class ParticleLogo {
     this.logoImage.addEventListener('click', () => {
       this.toggle();
     });
+  }
+
+  handleResize() {
+    const width = Math.min(160, window.innerWidth * 0.15);
+    const height = Math.min(130, window.innerHeight * 0.15);
+
+    this.renderer.setSize(width, height);
+    this.renderer.domElement.style.width = width + 'px';
+    this.renderer.domElement.style.height = height + 'px';
+
+    // Update image size and position
+    this.logoImage.style.top = height * 0.27 + 4 + 'px';
+    this.logoImage.style.left = width * 0.3 + 8 + 'px';
+    this.logoImage.style.width = width * 0.5 + 'px';
+    this.logoImage.style.height = height * 0.5 + 'px';
   }
 
   createParticles() {
