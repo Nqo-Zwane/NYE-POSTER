@@ -1,9 +1,7 @@
 // Sound manager class for portfolio interactions
 class SoundManager {
   constructor() {
-    this.exploreSound = new Audio(
-      './public/sound/mixkit-select-click-1109.wav'
-    );
+    this.exploreSound = new Audio('/sound/mixkit-select-click-1109.wav');
     this.exploreSound.volume = 0.5;
     this.exploreSound.preload = 'auto';
     this.exploreSound.crossOrigin = 'anonymous';
