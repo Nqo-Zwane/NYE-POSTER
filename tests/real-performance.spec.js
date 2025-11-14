@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const SITE_URL = 'https://nye-poster.netlify.app';
+const SITE_URL = 'https://buzzonya.iftsystems.co.za';
 
 test.describe('Real Performance Tests', () => {
   test('should load site within performance budget', async ({ page }) => {
@@ -44,7 +44,7 @@ test.describe('Real Performance Tests', () => {
         resourceTimes.push({
           url: response.url(),
           status: response.status(),
-          timing: response.timing(),
+          timing: response.timing,
         });
       }
     });
@@ -68,7 +68,7 @@ test.describe('Real Performance Tests', () => {
     await page.waitForLoadState('networkidle');
 
     // Test interaction - try clicking a grid item
-    const gridItem = page.locator('.grid__item').first();
+    const gridItem = page.locator('.row__item').first();
     await gridItem.waitFor({ state: 'visible' });
 
     const interactiveTime = Date.now() - startTime;
