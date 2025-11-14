@@ -213,9 +213,27 @@ class ParticleLogo {
 
     img.onerror = () => {
       console.error('Failed to load logo image');
+      // Create fallback particles in a simple pattern
+      this.createFallbackParticles();
     };
 
     img.src = './img/LOGO-192X192-removebg-preview.png';
+  }
+
+  createFallbackParticles() {
+    // Create a simple rectangular pattern as fallback
+    for (let y = -30; y <= 30; y += 4) {
+      for (let x = -40; x <= 40; x += 4) {
+        if (Math.random() > 0.3) {
+          // Add some randomness
+          this.textPositions.push({
+            x: x * 0.1,
+            y: y * 0.1,
+          });
+        }
+      }
+    }
+    this.createParticles();
   }
 
   toggle() {
