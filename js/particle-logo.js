@@ -26,7 +26,7 @@ class ParticleLogo {
 
     this.particles = [];
     this.textPositions = [];
-    this.state = 'scattered'; // 'scattered', 'logo', 'image'
+    this.isFormed = false;
     this.logoImage = null;
 
     this.setupRenderer();
@@ -198,37 +198,14 @@ class ParticleLogo {
   }
 
   toggle() {
-    if (this.state === 'scattered') {
-      // Scattered → Logo formation
-      this.state = 'logo';
-      this.formLogo();
-    } else if (this.state === 'logo') {
-      // Logo → Image
-      this.state = 'image';
+    this.isFormed = !this.isFormed;
+
+    if (this.isFormed) {
+      // Scattered → Image (skip particle logo formation)
       this.showImage();
     } else {
-      // Image → Scattered
-      this.state = 'scattered';
+      // Image → Scattered particles
       this.scatterParticles();
-    }
-  }
-
-  formLogo() {
-    if (typeof gsap === 'undefined') {
-      this.particles.forEach((particle, i) => {
-        particle.currentX = particle.targetX;
-        particle.currentY = particle.targetY;
-      });
-    } else {
-      this.particles.forEach((particle, i) => {
-        gsap.to(particle, {
-          currentX: particle.targetX,
-          currentY: particle.targetY,
-          duration: 1.5,
-          ease: 'power2.out',
-          delay: Math.random() * 0.3,
-        });
-      });
     }
   }
 
@@ -279,7 +256,7 @@ class ParticleLogo {
       const positions = this.points.geometry.attributes.position.array;
 
       this.particles.forEach((particle, i) => {
-        if (this.state === 'scattered') {
+        if (!this.isFormed) {
           particle.currentZ =
             particle.randomZ + Math.sin(time * 2 + particle.randomSeed) * 2;
         }
