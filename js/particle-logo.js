@@ -67,8 +67,8 @@ class ParticleLogo {
     this.logoImage = document.createElement('img');
     this.logoImage.src = './img/LOGO-192X192-removebg-preview.png';
     this.logoImage.style.position = 'absolute';
-    this.logoImage.style.top = '50px';
-    this.logoImage.style.left = '70px';
+    this.logoImage.style.top = '35px';
+    this.logoImage.style.left = '48px';
     this.logoImage.style.width = '80px';
     this.logoImage.style.height = '65px';
     this.logoImage.style.cursor = 'pointer';
