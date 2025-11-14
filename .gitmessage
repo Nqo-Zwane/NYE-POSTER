@@ -1,0 +1,10 @@
+# Commit message template with time tracking
+# 
+# Format: type: description [time] [#issue]
+# Examples:
+#   feat: add particle system 2h #2
+#   fix: optimize image loading 30m #1
+#   docs: update readme 15m
+#
+# Time formats: 1h, 2hr, 30m, 1.5h
+# Issue refs: #1, #2, fixes #3, closes #4

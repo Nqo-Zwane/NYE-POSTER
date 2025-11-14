@@ -1,1 +1,21 @@
+#!/usr/bin/env sh
+
+# Check for time and issue number in commit message
+commit_msg=$(cat $1)
+
+# Check for time pattern (1h, 30m, 2hr, etc.)
+if ! echo "$commit_msg" | grep -qE "[0-9]+(\.[0-9]+)?(h|hr|hours?|m|min|minutes?)"; then
+  echo "❌ Error: Commit message must include time spent (e.g., '1h', '30m', '2hr')"
+  echo "Example: 'feat: add particle system 2h #2'"
+  exit 1
+fi
+
+# Check for issue reference (#1, #2, etc.)
+if ! echo "$commit_msg" | grep -qE "#[0-9]+"; then
+  echo "❌ Error: Commit message must include issue reference (e.g., '#1', '#2')"
+  echo "Example: 'feat: add particle system 2h #2'"
+  exit 1
+fi
+
+echo "✅ Commit format valid: time and issue number detected"
 npx --no -- commitlint --edit $1

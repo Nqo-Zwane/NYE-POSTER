@@ -1,5 +1,6 @@
 // Importing utility functions for preloading images, getting mouse position, and linear interpolation
 import { preloadImages, getMousePos, lerp } from './utils.js';
+import { SoundManager } from './sound.js';
 
 // Registers the Flip plugin with GSAP
 gsap.registerPlugin(Flip);

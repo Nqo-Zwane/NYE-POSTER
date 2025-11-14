@@ -6,15 +6,23 @@ class SoundManager {
     );
     this.exploreSound.volume = 0.5;
     this.exploreSound.preload = 'auto';
+    this.exploreSound.crossOrigin = 'anonymous';
+
+    // Handle load errors
+    this.exploreSound.addEventListener('error', (e) => {
+      console.warn('Audio file failed to load:', e);
+    });
   }
 
   playExploreSound() {
-    this.exploreSound.currentTime = 0;
-    this.exploreSound
-      .play()
-      .catch((e) => console.warn('Audio play failed:', e));
+    if (this.exploreSound.readyState >= 2) {
+      this.exploreSound.currentTime = 0;
+      this.exploreSound
+        .play()
+        .catch((e) => console.warn('Audio play failed:', e));
+    }
   }
 }
 
-// Make available globally
-window.SoundManager = SoundManager;
+// Export for ES modules
+export { SoundManager };
