@@ -74,7 +74,7 @@ class ParticleLogo {
     this.logoImage.src = './img/LOGO-192X192-removebg-preview.png';
     this.logoImage.style.position = 'absolute';
     this.logoImage.style.top = height * 0.27 + 4 + 'px';
-    this.logoImage.style.left = width * 0.3 + 8 + 'px';
+    this.logoImage.style.left = width * 0.25 + 8 + 'px';
     this.logoImage.style.width = width * 0.5 + 'px';
     this.logoImage.style.height = height * 0.5 + 'px';
     this.logoImage.style.cursor = 'pointer';
@@ -100,7 +100,7 @@ class ParticleLogo {
 
     // Update image size and position
     this.logoImage.style.top = height * 0.27 + 4 + 'px';
-    this.logoImage.style.left = width * 0.3 + 8 + 'px';
+    this.logoImage.style.left = width * 0.25 + 8 + 'px';
     this.logoImage.style.width = width * 0.5 + 'px';
     this.logoImage.style.height = height * 0.5 + 'px';
   }
