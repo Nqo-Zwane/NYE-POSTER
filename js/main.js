@@ -207,17 +207,23 @@ const stopRendering = () => {
 };
 
 const enterFullview = () => {
-  // Logic to animate the middle image to full view using gsap Flip
-  const flipstate = Flip.getState(middleRowItemInner);
-  fullview.appendChild(middleRowItemInner);
+  // Get the badge container
+  const badgeContainer = document.querySelector('.badge-container');
+
+  // Remove hidden class first
+  badgeContainer.classList.remove('hidden');
+
+  // Badge animation using GSAP Flip (instead of image)
+  const flipstate = Flip.getState(badgeContainer);
+  fullview.appendChild(badgeContainer);
 
   // Get the CSS variable value for the translation
   const transContent = getCSSVariableValue(content, '--trans-content');
 
-  // Create a GSAP timeline for the Flip animation
+  // Create a GSAP timeline for the animation
   const tl = gsap.timeline();
 
-  // Add the Flip animation to the timeline
+  // Add the Flip animation to the timeline for badge
   tl.add(
     Flip.from(flipstate, {
       duration: 0.9,
@@ -236,9 +242,9 @@ const enterFullview = () => {
       },
       0
     )
-    // Scale up the inner image
+    // Scale up the badge container
     .to(
-      middleRowItemInnerImage,
+      badgeContainer,
       {
         scale: 1.2,
         duration: 3,
@@ -248,30 +254,38 @@ const enterFullview = () => {
     )
     // Move the content up
     .to(content, {
-      y: transContent, // Use the CSS variable value
+      y: transContent,
       duration: 0.9,
       ease: 'power4',
     })
     // Show the frame
     .add(() => frame.classList.remove('hidden'), '<')
-    // Scale and move
+    // Final scale and move for badge
     .to(
-      middleRowItemInnerImage,
+      badgeContainer,
       {
         scale: 1.1,
-        startAt: { filter: 'brightness(100%)' },
-        filter: 'brightness(50%)',
         y: '-5vh',
         duration: 0.9,
         ease: 'power4',
       },
       '<'
-    );
+    )
+    // Initialize badge after animation
+    .add(() => {
+      window.initBadge();
+      // Force canvas to resize to fullview
+      const canvas = document.getElementById('badge-canvas');
+      if (canvas) {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+      }
+    }, '<+=0.5');
 
   // Hide the button
   enterButton.classList.add('hidden');
-  // Scrolling allowed
-  body.classList.remove('noscroll');
+  // Remove noscroll to allow scrolling
+  document.body.classList.remove('noscroll');
 };
 
 // Initialization function
