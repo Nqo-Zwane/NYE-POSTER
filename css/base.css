@@ -117,24 +117,47 @@ a:focus-visible {
   outline: none;
 }
 
+/* Updated: 2025-11-16 12:28 - Force flexbox with !important */
 .frame {
   font-size: 12px;
   color: #023e8a;
   padding: var(--page-padding);
   display: grid;
+  grid-template-columns: 1fr auto;
   z-index: 1000;
-  grid-row-gap: 1rem;
-  grid-column-gap: 2rem;
   pointer-events: none;
-  justify-items: start;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
-  grid-template-areas: 'title' 'sponsor';
   transition: opacity 0.3s;
+  min-height: 0;
+}
+
+.frame:empty {
+  display: none;
+}
+
+.menu-right {
+  color: #000;
+  font-family: new-science-mono, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+  z-index: 1001;
+  justify-self: end;
+}
+
+.menu-right:hover {
+  opacity: 0.7;
+}
+
+.menu-right.hidden {
+  display: none;
 }
 
 .hidden {
@@ -384,9 +407,7 @@ a:focus-visible {
     --page-padding: 2rem 3rem;
   }
   .frame {
-    grid-template-columns: auto 1fr;
-    grid-template-areas: 'title sponsor';
-    align-content: space-between;
+    grid-template-columns: 1fr auto;
   }
   .content__header h2 {
     font-size: clamp(2rem, 20vh, 16rem);

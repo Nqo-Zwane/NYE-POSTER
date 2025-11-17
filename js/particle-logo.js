@@ -42,12 +42,9 @@ class ParticleLogo {
     this.renderer.setClearColor(0x000000, 0);
     this.camera.position.z = 20;
 
-    const header = document.querySelector('.frame');
+    const logoContainer = document.querySelector('.logo-container');
     const canvas = this.renderer.domElement;
 
-    canvas.style.position = 'absolute';
-    canvas.style.top = '4px';
-    canvas.style.left = '8px';
     canvas.style.cursor = 'pointer';
     canvas.style.zIndex = '10';
     canvas.style.border = 'none';
@@ -56,7 +53,7 @@ class ParticleLogo {
     canvas.style.height = height + 'px';
     canvas.style.pointerEvents = 'auto';
 
-    header.appendChild(canvas);
+    logoContainer.appendChild(canvas);
 
     // Create image element for final state
     this.createImageElement(width, height);
